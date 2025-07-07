@@ -58,7 +58,7 @@ export function EditSubjectDialog({ subject, onSubjectUpdated, onSubjectDeleted 
     try {
       await updateSubject(subject.id, {
         name: formData.name.trim(),
-        code: formData.code.trim() || null,
+        code: formData.code.trim() || undefined,
         required_percentage: formData.required_percentage,
         total_classes: formData.total_classes,
         attended_classes: formData.attended_classes
