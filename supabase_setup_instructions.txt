@@ -1,0 +1,41 @@
+SUPABASE DATABASE SETUP INSTRUCTIONS
+=====================================
+
+Step 1: Open Supabase SQL Editor
+- Go to your Supabase project dashboard
+- Click on "SQL Editor" in the left sidebar
+- Click "New Query"
+
+Step 2: Copy the SQL Script
+- Open the file "supabase_setup.sql" in this folder
+- Select ALL the content (Ctrl+A)
+- Copy it (Ctrl+C)
+
+Step 3: Paste and Execute
+- Paste the SQL script into the Supabase SQL Editor
+- Click the "Run" button (or press Ctrl+Enter)
+- You should see "Success. No rows returned" message
+
+Step 4: Verify Tables Created
+- Go to "Table Editor" in Supabase
+- You should see two new tables:
+  * subjects
+  * attendance_records
+
+Step 5: Check Authentication Settings
+- Go to "Authentication" → "Settings"
+- Set Site URL to: http://localhost:3000
+- Enable email confirmations (recommended)
+
+TROUBLESHOOTING:
+- If you get permission errors, make sure you're using the correct project
+- If tables already exist, the script will skip creating them (that's normal)
+- If you see syntax errors, make sure you copied the entire script
+
+NEXT STEPS:
+1. Save your .env file with correct Supabase credentials
+2. Run: npm install
+3. Run: npm run dev
+4. Open: http://localhost:3000
+
+Your database is now ready for the AttendTrack application!
