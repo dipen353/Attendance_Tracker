@@ -7,7 +7,7 @@ import { useAuth } from '@/contexts/auth-context'
 import { getSubject } from '@/lib/services/subjects'
 import { getAttendanceRecords } from '@/lib/services/attendance'
 import { calculateAttendancePercentage } from '@/lib/utils'
-import { EnhancedAttendanceButtons } from './enhanced-attendance-buttons'
+import { EnhancedAttendanceButtonsWithReset } from './enhanced-attendance-buttons-with-reset'
 import { ArrowLeft, TrendingUp, TrendingDown, Calendar, CheckCircle, XCircle, Clock } from 'lucide-react'
 import { format } from 'date-fns'
 
@@ -201,7 +201,7 @@ export function DetailedSubjectView({ subjectId, onBack, onAttendanceUpdated }: 
             <CardTitle className="text-lg">Mark Today's Attendance</CardTitle>
           </CardHeader>
           <CardContent>
-            <EnhancedAttendanceButtons 
+            <EnhancedAttendanceButtonsWithReset 
               subjectId={subject.id}
               onAttendanceMarked={handleAttendanceMarked}
             />
