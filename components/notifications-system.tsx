@@ -4,9 +4,7 @@ import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
-import { Separator } from '@/components/ui/separator'
 import { 
   Bell, 
   AlertTriangle, 
@@ -85,8 +83,8 @@ export function NotificationsSystem() {
         subjects.forEach(subject => {
           const percentage = calculateAttendancePercentage(subject.attended_classes, subject.total_classes)
           
-          if (percentage < subject.criteria) {
-            const classesNeeded = Math.ceil((subject.criteria * (subject.total_classes + 5) / 100) - subject.attended_classes)
+          if (percentage < subject.required_percentage) {
+            const classesNeeded = Math.ceil((subject.required_percentage * (subject.total_classes + 5) / 100) - subject.attended_classes)
             newNotifications.push({
               id: `low-attendance-${subject.id}`,
               type: 'warning',
@@ -99,7 +97,7 @@ export function NotificationsSystem() {
           }
 
           // Critical warning for very low attendance
-          if (percentage < subject.criteria - 10) {
+          if (percentage < subject.required_percentage - 10) {
             newNotifications.push({
               id: `critical-attendance-${subject.id}`,
               type: 'urgent',
@@ -127,7 +125,7 @@ export function NotificationsSystem() {
               id: `reminder-${entry.id}`,
               type: 'reminder',
               title: 'Upcoming Class',
-              message: `${entry.subjects?.name} class starts at ${entry.start_time}`,
+              message: `${entry.subjects?.name || entry.subject_id} class starts at ${entry.start_time}`,
               timestamp: new Date(),
               read: false
             })
@@ -154,7 +152,7 @@ export function NotificationsSystem() {
           }
 
           // Improvement achievement
-          if (percentage >= subject.criteria + 10) {
+          if (percentage >= subject.required_percentage + 10) {
             newNotifications.push({
               id: `excellent-${subject.id}`,
               type: 'achievement',
@@ -345,49 +343,57 @@ export function NotificationsSystem() {
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
                 <Label htmlFor="low-attendance">Low Attendance Warnings</Label>
-                <Switch
+                <input
+                  type="checkbox"
                   id="low-attendance"
                   checked={settings.lowAttendanceWarnings}
-                  onCheckedChange={(checked) =>
-                    setSettings(prev => ({ ...prev, lowAttendanceWarnings: checked }))
+                  onChange={(e) =>
+                    setSettings(prev => ({ ...prev, lowAttendanceWarnings: e.target.checked }))
                   }
+                  className="w-5 h-5 accent-blue-600"
                 />
               </div>
 
               <div className="flex items-center justify-between">
                 <Label htmlFor="class-reminders">Class Reminders</Label>
-                <Switch
+                <input
+                  type="checkbox"
                   id="class-reminders"
                   checked={settings.classReminders}
-                  onCheckedChange={(checked) =>
-                    setSettings(prev => ({ ...prev, classReminders: checked }))
+                  onChange={(e) =>
+                    setSettings(prev => ({ ...prev, classReminders: e.target.checked }))
                   }
+                  className="w-5 h-5 accent-blue-600"
                 />
               </div>
 
               <div className="flex items-center justify-between">
                 <Label htmlFor="achievements">Achievement Alerts</Label>
-                <Switch
+                <input
+                  type="checkbox"
                   id="achievements"
                   checked={settings.achievementAlerts}
-                  onCheckedChange={(checked) =>
-                    setSettings(prev => ({ ...prev, achievementAlerts: checked }))
+                  onChange={(e) =>
+                    setSettings(prev => ({ ...prev, achievementAlerts: e.target.checked }))
                   }
+                  className="w-5 h-5 accent-blue-600"
                 />
               </div>
 
               <div className="flex items-center justify-between">
                 <Label htmlFor="weekly-reports">Weekly Reports</Label>
-                <Switch
+                <input
+                  type="checkbox"
                   id="weekly-reports"
                   checked={settings.weeklyReports}
-                  onCheckedChange={(checked) =>
-                    setSettings(prev => ({ ...prev, weeklyReports: checked }))
+                  onChange={(e) =>
+                    setSettings(prev => ({ ...prev, weeklyReports: e.target.checked }))
                   }
+                  className="w-5 h-5 accent-blue-600"
                 />
               </div>
 
-              <Separator />
+              <hr className="my-4" />
 
               <div className="space-y-2">
                 <Label htmlFor="reminder-time">Reminder Time (minutes before class)</Label>
