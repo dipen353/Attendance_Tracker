@@ -40,7 +40,7 @@ export function MainApp() {
       case 'analytics':
         return <AnalyticsDashboard />
       default:
-        return <Dashboard />
+        return <OptimizedDashboard />
     }
   }
 
